@@ -45,34 +45,34 @@
 (delete-selection-mode 1)
 
 (use-package persistent-scratch
-:init
-(persistent-scratch-setup-default)
-(persistent-scratch-autosave-mode 1))
+  :init
+  (persistent-scratch-setup-default)
+  (persistent-scratch-autosave-mode 1))
 
 ;; Undo-tree
 
 (use-package undo-tree
-:config (setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/var/undo-tree/")))
-:init (global-undo-tree-mode)
-:bind (("C-z" . undo-tree-undo)
-     ("C-S-z" . undo-tree-redo)))
+  :config (setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/var/undo-tree/")))
+  :init (global-undo-tree-mode)
+  :bind (("C-z" . undo-tree-undo)
+         ("C-S-z" . undo-tree-redo)))
 
 ;; Magit
 
 (use-package magit
-:ensure t
-:bind (("C-M-g" . magit-status)))
+  :ensure t
+  :bind (("C-M-g" . magit-status)))
 
 (use-package sudo-edit)
 
 (setq select-enable-clipboard t
-  save-interprogram-paste-before-kill t
-  yank-pop-change-selection t)
+      save-interprogram-paste-before-kill t
+      yank-pop-change-selection t)
 
 ;; Do not allow the cursor in the minibuffer prompt
 
 (setq minibuffer-prompt-properties
-    '(read-only t cursor-intangible t face minibuffer-prompt))
+      '(read-only t cursor-intangible t face minibuffer-prompt))
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
 (setq use-short-answers t)
@@ -89,65 +89,65 @@
 
 ;; capf backend for fuzzy-like matching
 (use-package orderless
-:init
-(setq completion-styles '(orderless basic partial-completion)
-completion-category-defaults nil
-completion-category-overrides '((file (styles partial-completion)))))
+  :init
+  (setq completion-styles '(orderless basic partial-completion)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
 
 ;; rich annotations for vertico etc.
 (use-package marginalia
-:init (marginalia-mode))
+  :init (marginalia-mode))
 
 ;; vertical competion for M-x, find-file etc.
 (use-package vertico
-:init (vertico-mode))
+  :init (vertico-mode))
 
 ;; vertical completion at point
 (use-package corfu
-:straight (corfu :files (:defaults "extensions/*")
-       :includes (corfu-history corfu-popupinfo))
-:config
-(setq corfu-popupinfo-delay t
-    corfu-cycle t
-    corfu-auto t
-    corfu-auto-prefix 2
-    corfu-auto-delay 0.0)
-:init
-(global-corfu-mode 1)
-(corfu-popupinfo-mode 1))
+  :elpaca (corfu :files (:defaults "extensions/*")
+                 :includes (corfu-history corfu-popupinfo))
+  :config
+  (setq corfu-popupinfo-delay t
+        corfu-cycle t
+        corfu-auto t
+        corfu-auto-prefix 2
+        corfu-auto-delay 0.0)
+  :init
+  (global-corfu-mode 1)
+  (corfu-popupinfo-mode 1))
 
 ;; modeline
 (use-package simple-modeline
-:hook (after-init . simple-modeline-mode))
+  :hook (after-init . simple-modeline-mode))
 
 ;; (use-package minions)
 
 ;; cheat sheet
 (use-package which-key
-:init (which-key-mode))
+  :init (which-key-mode))
 
 ;; Languages
 
 ;; lsp
 (use-package eglot
-:hook ((js-mode python-mode css-mode go-mode) . eglot-ensure)
-:bind (:map eglot-mode-map
-          ("C-c r" . 'eglot-rename)
-          ("C-c o" . 'eglot-code-action-organize-imports)
-          ("C-c h" . 'eldoc)))
+  :hook ((js-mode python-mode css-mode go-mode) . eglot-ensure)
+  :bind (:map eglot-mode-map
+              ("C-c r" . 'eglot-rename)
+              ("C-c o" . 'eglot-code-action-organize-imports)
+              ("C-c h" . 'eldoc)))
 
 (use-package sly
-:commands sly
-:defer t
-:config (progn (setq inferior-lisp-program "sbcl")
-             ;(setq sly-contribs '(sly-scratch sly-mrepl sly-stickers))
-             (sly-setup))
-:bind (:map sly-mode-map
-          ("C-c b" . sly-eval-buffer)))
+  :commands sly
+  :defer t
+  :config (progn (setq inferior-lisp-program "sbcl")
+                                        ;(setq sly-contribs '(sly-scratch sly-mrepl sly-stickers))
+                 (sly-setup))
+  :bind (:map sly-mode-map
+              ("C-c b" . sly-eval-buffer)))
 
 (use-package tree-sitter-langs)
 (use-package tree-sitter
-:init (global-tree-sitter-mode))
+  :init (global-tree-sitter-mode))
 
 (use-package parinfer-rust-mode)
 
@@ -158,32 +158,33 @@ completion-category-overrides '((file (styles partial-completion)))))
 
 (use-package poetry)
 (use-package direnv
-:config (direnv-mode))
+  :config (direnv-mode))
 
 (use-package ein
-:config (setq ein:output-area-inlined-images t
-            ein:output-type))
+  :config (setq ein:output-area-inlined-images t
+                ein:output-type 'svg))
+
 (use-package web-mode)
 
 ;; Misc
 
 (use-package toolbox-tramp
-:straight (toolbox-tramp :type git
-           :host github
-           :repo "fejfighter/toolbox-tramp"))
+  :elpaca (toolbox-tramp :type git
+                         :host github
+                         :repo "fejfighter/toolbox-tramp"))
 
 ;; UI
 
 (setq scroll-margin 0
-  scroll-conservatively 100000
-  scroll-preserve-screen-position 1)
+      scroll-conservatively 100000
+      scroll-preserve-screen-position 1)
 
 (show-paren-mode 1)
 
 (use-package diminish
-:config
-(mapc #'diminish (list 'eldoc-mode 'visual-line-mode 'wrap 'undo-tree-mode
-                     'helm-mode)))
+  :config
+  (mapc #'diminish (list 'eldoc-mode 'visual-line-mode 'wrap 'undo-tree-mode
+                         'helm-mode)))
 
 
 ;; Keys
@@ -191,9 +192,9 @@ completion-category-overrides '((file (styles partial-completion)))))
 (when (eq system-type 'darwin)
   ;; things specific to mac keyboard
   (setq mac-command-modifier 'meta
-      mac-right-command-modifier 'meta
-      mac-option-modifier nil
-      mac-right-option-modifier nil))
+        mac-right-command-modifier 'meta
+        mac-option-modifier nil
+        mac-right-option-modifier nil))
 
 (defun k60:interactive-find-file (filename)
   (interactive)
@@ -253,10 +254,10 @@ completion-category-overrides '((file (styles partial-completion)))))
   (reverse-im-activate "russian-computer"))
 
 ;; emms
-(use-package emms
-  :init (progn (emms-all)
-               (setq emms-player-list '(emms-player-mpv)
-                     emms-source-file-default-directory "/home/k60/Music/library")))
+;; (use-package emms
+;;   :init (progn (emms-all)
+;;                (setq emms-player-list '(emms-player-mpv)
+;;                      emms-source-file-default-directory "/home/k60/Music/library")))
 
 
 ;; tramp
@@ -264,9 +265,9 @@ completion-category-overrides '((file (styles partial-completion)))))
 (setq remote-file-name-inhibit-cache nil) ; keep
 
 (tramp-set-completion-function "ssh"
- (append (tramp-get-completion-function "ssh")
-         '((tramp-parse-sconfig "/var/home/k60/.ssh/config-rost")
-           (tramp-parse-sconfig "/var/home/k60/.ssh/config-private"))))
+                               (append (tramp-get-completion-function "ssh")
+                                       '((tramp-parse-sconfig "/var/home/k60/.ssh/config-rost")
+                                         (tramp-parse-sconfig "/var/home/k60/.ssh/config-private"))))
 
 ;; use remote's path too
 (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
